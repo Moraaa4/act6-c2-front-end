@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity 6: API Consumption (TMDB API)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>Movie Explorer (TMDB)</h1>
+            <p>Consumiendo API a través de una Arquitectura SOA Desacoplada</p>
+        </header>
+
+        <!-- Main Content Area where States are Managed -->
+        <main id="main-content" class="main-content">
+            <!-- 1. Loading State -->
+            <div id="state-loading" class="state-container active">
+                <div class="spinner"></div>
+                <p>Cargando películas populares...</p>
+            </div>
+
+            <!-- 2. Error State -->
+            <div id="state-error" class="state-container hidden">
+                <div class="error-icon">⚠️</div>
+                <h2 id="error-title">¡Ups! Algo salió mal.</h2>
+                <p id="error-message">No pudimos conectar con el servidor.</p>
+                <button id="retry-btn" class="retry-btn">Reintentar</button>
+            </div>
+
+            <!-- 3. Success State (Grid for Cards) -->
+            <div id="state-success" class="state-container hidden">
+                <div id="characters-grid" class="characters-grid">
+                    <!-- Cards will be injected here by JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
