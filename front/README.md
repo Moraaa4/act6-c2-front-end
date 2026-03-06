@@ -1,26 +1,29 @@
-# APP de Moraaa (Next.js App Router)
+# Frontend App (Next.js App Router) - The Movie Database
 
-Esta es la aplicación web integral para la Actividad 6. Basándonos en los principios de arquitecturas orientadas a servicios (SOA) y priorizando un desarrollo Full-Stack.
+Esta es la aplicación web integral (Frontend) para la Actividad 6, desarrollada con **Next.js (App Router)** y **TypeScript**. Basándonos en los principios de arquitecturas orientadas a servicios (SOA) y priorizando un desarrollo Frontend moderno.
 
-## Arquitectura de Seguridad
-La profesora estipuló firmemente: **"Variables de entorno hardcodeadas" están prohibidas.** Dado que estamos consumiendo la API de terceros The Movie Database (TMDB) que requiere un token bancarizado privado, es **inseguro** hacer peticiones directamente desde los componentes de React del cliente (`page.tsx`).
+## Cumplimiento de la Rúbrica (Buenas Prácticas y Arquitectura)
 
-Para solucionar esto elegantemente sin necesidad de un repositorio extra:
-1.  **Frontend (UI):** Interactúa y renderiza únicamente desde `src/app/page.tsx`. Reacciona al Loading, Success y Error estéticamente usando Grid.
-2.  **Proxy de Next.js (API Route):** Construimos una ruta de servidor interna en `src/app/api/movies/route.ts`. 
-3.  **Flujo Seguro:** La UI le pide las películas a nuestra propia ruta `/api/movies`. El servidor de Next.js lee el secreto en sus variables locales, se lo adjunta a la conexión, negocia con TMDB, y le regresa limpio el resultado al Cliente. Así, la llave jamás sale a internet.
+- **Patrón BFF (Backend for Frontend):** Para solucionar los problemas de **CORS** del navegador y garantizar el ocultamiento de las credenciales, el cliente (`page.tsx`) nunca se comunica con la API de TMDB directamente. Las peticiones fluyen hacia el servidor intermediario interno de Next.js (`/api/movies/route.ts`).
+- **Estados en la UI y Asincronía:** Todas las peticiones implementan un riguroso esquema **async/await**. Además, la interfaz principal maneja explícitamente estados condicionales para dar retroalimentación UX:
+  - **Loading:** Pantalla de carga mientras se resuelve la promesa de red.
+  - **Success:** Renderizado exitoso de la cuadrícula de tarjetas de películas.
+  - **Error:** Si la API falla o la llave se daña, el try-catch despliega una notificación de error en pantalla sin detener o "romper" la página web entera.
+- **Cero Variables Hardcodeadas:** La *URL Base* y los *Tokens Bancarizados* para TMDB están fuera del código fuente, residiendo en un archivo local `.env` que el servidor lee directamente en tiempo de ejecución de manera segura y privada.
 
-## Requisitos Previos y .env
-Para correr, necesitas crear un archivo `.env` en la raíz de esta carpeta `front/` con la siguiente llave (la cual no se subió a git por seguridad):
+## Requisitos Previos y Archivo `.env`
+
+Para correr la aplicación de forma local, necesitas crear un archivo `.env` en la raíz de esta carpeta `front/` con tus llaves y sin subirlas a git:
 
 ```env
 TMDB_API_URL=https://api.themoviedb.org/3/
 TMDB_API_TOKEN=Tu_API_Read_Access_Token_AQUI
 ```
 
-## Despliegue con Docker Compose
-Puedes ir a la carpeta vecina `infra/` y ejecutar:
-```bash
-docker compose up --build
-```
-Este comando levantará con éxito tanto el Cliente como el Servidor interno de Next.js en el puerto 80.
+## Ejecución Local
+
+1. Instala las dependencias: `npm install`
+2. Levanta el servidor: `npm run dev`
+3. Abre: [http://localhost:3000](http://localhost:3000)
+
+Alternativamente, para correr de forma automatizada usando contenedores en puertos aislados, consulta la carpeta `infra/`.
