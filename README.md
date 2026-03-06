@@ -1,5 +1,4 @@
-# ACT6-C2-Exposici-n-y-Consumo-de-APIs-de-Terceros
-# Frontend App (Next.js App Router) - The Movie Database
+# ACT6-C2-Exposicion-y-Consumo-de-API de Terceros-The Movie Database
 
 Esta es la aplicación web integral (Frontend) para la Actividad 6, desarrollada con **Next.js (App Router)** y **TypeScript**. Basándonos en los principios de arquitecturas orientadas a servicios (SOA) y priorizando un desarrollo Frontend moderno.
 
